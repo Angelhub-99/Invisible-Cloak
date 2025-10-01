@@ -3,6 +3,7 @@ services:
     name: invisible-cloak-app
     runtime: python
     plan: free
+    region: oregon
     buildCommand: |
       echo "Python version check:"
       python --version
@@ -10,7 +11,7 @@ services:
       pip install --upgrade pip setuptools wheel
       echo "Installing requirements..."
       pip install -r requirements.txt
-    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --timeout 120
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --timeout 120 --log-level debug
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
