@@ -1,5 +1,17 @@
+# Core Flask dependencies
 Flask==3.0.0
-opencv-python==4.8.1.78
+gunicorn==21.2.0
+
+# OpenCV - use headless version for server deployment
+opencv-python-headless==4.8.1.78
+
+# Supporting libraries
 numpy==1.24.3
 Pillow==10.0.1
-gunicorn==21.2.0
+
+# Upgrade setuptools to fix build issues
+setuptools>=58.0.4
+wheel>=0.38.0
+
+# Additional dependencies for stability
+pip>=23.0.0
