@@ -1,13 +1,18 @@
 services:
   - type: web
     name: invisible-cloak-app
-    runtime: python3
+    runtime: python
+    plan: free
     buildCommand: |
+      echo "Python version check:"
+      python --version
+      echo "Upgrading pip, setuptools, and wheel..."
       pip install --upgrade pip setuptools wheel
+      echo "Installing requirements..."
       pip install -r requirements.txt
     startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --timeout 120
     envVars:
       - key: PYTHON_VERSION
-        value: 3.11
+        value: 3.11.9
       - key: PIP_NO_CACHE_DIR
         value: 1
