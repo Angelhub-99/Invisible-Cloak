@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invisible Cloak - Web App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+
+        .video-container {
+            background: #000;
+            border-radius: 15px;
+            margin: 20px 0;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        #videoFeed {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #feca57 0%, #ff9ff3 100%);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #48cae4 0%, #023e8a 100%);
+        }
+
+        .status {
+            margin: 15px 0;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .instructions h3 {
+            color: #495057;
+            margin-bottom: 10px;
+        }
+
+        .instructions ul {
+            color: #6c757d;
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🪄 Invisible Cloak</h1>
+        <p class="subtitle">Experience the magic of computer vision!</p>
+
+        <div class="video-container">
+            <img id="videoFeed" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgZmlsbD0iIzMzMzMzMyIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DbGljayAiU3RhcnQgQ2FtZXJhIiB0byBiZWdpbjwvdGV4dD4KICA8L3N2Zz4K" alt="Video Feed" />
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="startCamera()">🎥 Start Camera</button>
+            <button class="btn btn-danger" onclick="stopCamera()">⏹️ Stop Camera</button>
+            <button class="btn btn-warning" onclick="captureBackground()">📷 Capture Background</button>
+            <button class="btn btn-info" onclick="resetSmoothing()">🔄 Reset Smoothing</button>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <div class="instructions">
+            <h3>📋 Instructions:</h3>
+            <ul>
+                <li><strong>Start Camera:</strong> Initialize the camera feed</li>
+                <li><strong>Capture Background:</strong> Step out of the frame and click to capture the background for the invisible effect</li>
+                <li><strong>Wear Red Cloth:</strong> Put on a red colored cloth or object to become invisible</li>
+                <li><strong>Reset Smoothing:</strong> Reset the temporal smoothing if the effect becomes unstable</li>
+                <li><strong>Stop Camera:</strong> Stop the camera feed when done</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+            
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        function startCamera() {
+            fetch('/start_camera')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        document.getElementById('videoFeed').src = '/video_feed';
+                        showStatus(data.message, 'success');
+                    } else {
+                        showStatus(data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    showStatus('Error starting camera', 'error');
+                    console.error('Error:', error);
+                });
+        }
+
+        function stopCamera() {
+            fetch('/stop_camera')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('videoFeed').src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iNjQwIiBoZWlnaHQ9IjQ4MCIgZmlsbD0iIzMzMzMzMyIvPgogIDx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiNmZmYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DbGljayAiU3RhcnQgQ2FtZXJhIiB0byBiZWdpbjwvdGV4dD4KICA8L3N2Zz4K';
+                    showStatus(data.message, 'success');
+                })
+                .catch(error => {
+                    showStatus('Error stopping camera', 'error');
+                    console.error('Error:', error);
+                });
+        }
+
+        function captureBackground() {
+            showStatus('Please step out of the frame! Capturing background...', 'success');
+            
+            setTimeout(() => {
+                fetch('/capture_background')
+                    .then(response => response.json())
+                    .then(data => {
+                        showStatus(data.message, data.status === 'success' ? 'success' : 'error');
+                    })
+                    .catch(error => {
+                        showStatus('Error capturing background', 'error');
+                        console.error('Error:', error);
+                    });
+            }, 2000);
+        }
+
+        function resetSmoothing() {
+            fetch('/reset_smoothing')
+                .then(response => response.json())
+                .then(data => {
+                    showStatus(data.message, 'success');
+                })
+                .catch(error => {
+                    showStatus('Error resetting smoothing', 'error');
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>
