@@ -2,19 +2,19 @@
 Flask==3.0.0
 gunicorn==21.2.0
 
-# OpenCV - Use headless version for server deployment
-opencv-python-headless==4.8.1.78
+# OpenCV - Headless version for server deployment
+opencv-python-headless==4.10.0.84
 
-# Numerical Computing
-numpy==1.24.3
+# Numerical Computing - Python 3.11 compatible
+numpy==1.26.4
 
 # Image Processing
-Pillow==10.0.1
+Pillow==10.2.0
 
-# Build Tools (fixes deployment errors)
-setuptools>=58.0.4
-wheel>=0.38.0
-pip>=23.0.0
+# Build Tools - Fixes setuptools errors
+setuptools>=65.5.0
+wheel>=0.40.0
+pip>=23.3.0
 
 # Additional Flask Dependencies
 Werkzeug==3.0.0
